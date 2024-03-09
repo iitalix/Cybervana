@@ -6,6 +6,7 @@ from .auth_routes import validation_errors_to_error_messages
 
 items_routes = Blueprint('items', __name__)
 
+# creates Shopping Cart "item" for Vehicles added to cart
 @items_routes.route('/<int:id>', methods=['POST'])
 @login_required
 def create_item(id):
@@ -20,6 +21,7 @@ def create_item(id):
     db.session.commit()
     return new_form.to_dict()
 
+# removes item from Shopping Cart
 @items_routes.route('/delete/<int:id>', methods=['DELETE'])
 @login_required
 def delete_item(id):
@@ -33,6 +35,7 @@ def delete_item(id):
     else:
         return {'errors': "No cart item to delete"}
 
+# clears Shopping Cart
 @items_routes.route('/user/<int:id>/delete', methods=['DELETE'])
 @login_required
 def delete_user_items(id):

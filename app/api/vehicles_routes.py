@@ -9,7 +9,7 @@ from .auth_routes import validation_errors_to_error_messages
 
 vehicles_routes = Blueprint('vehicles', __name__)
 
-
+# retrieves vehicles for All Vehicles Page
 @vehicles_routes.route('/all')
 def all():
     """GET all vehicles for the purposes of shopping"""
@@ -19,6 +19,7 @@ def all():
     return [vehicle.to_dict() for vehicle in all_vehicles]
 
 
+# retrieves Vehicles owned by logged in user
 @vehicles_routes.route('/current')
 @login_required
 def current():
@@ -28,7 +29,7 @@ def current():
 
     return [vehicle.to_dict() for vehicle in all_user_vehicles]
 
-
+# retrieves and posts new Vehicle
 @vehicles_routes.route('/new', methods=['GET', 'POST'])
 @login_required
 def new_vehicle():
@@ -60,6 +61,7 @@ def new_vehicle():
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
+# updates vehicle through form
 @vehicles_routes.route("/update/<int:id>", methods=["PUT"])
 @login_required
 def update_vehicle(id):
@@ -86,7 +88,7 @@ def update_vehicle(id):
 
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
-
+# deletes vehicle by ID
 @vehicles_routes.route('/delete/<int:id>', methods=['DELETE'])
 @login_required
 def delete_vehicles(id):
@@ -107,12 +109,14 @@ def delete_vehicles(id):
         return {"Error": "Vehicle Delete Error, please try again"}
 
 
+# retrieves vehicle details by ID
 @vehicles_routes.route('/<int:id>')
 @login_required
 def get_vehicle_details(id):
     vehicle = Vehicle.query.get(id)
 
     return vehicle.to_dict()
+
 
 
 @vehicles_routes.route('/<int:id>/reviews/', methods=["vehicle"])

@@ -14,6 +14,7 @@ from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
 
+# Information for Google OAuth 2.0
 CLIENT_SECRET = os.getenv('GOOGLE_OAUTH_CLIENT_SECRET')
 CLIENT_ID = os.getenv('GOOGLE_OAUTH_CLIENT_ID')
 BASE_URL = os.getenv('BASE_URL')

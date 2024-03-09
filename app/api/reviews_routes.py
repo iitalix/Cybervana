@@ -7,7 +7,7 @@ from datetime import date
 
 reviews_routes = Blueprint('reviews', __name__)
 
-#create a review
+# create a review
 @reviews_routes.route('/new/vehicles/<int:id>', methods=['POST'])
 @login_required
 def post_new_review(id):
@@ -27,6 +27,7 @@ def post_new_review(id):
         return new_review.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
+# update a review
 @reviews_routes.route('/<int:id>/update/vehicles/', methods=['PUT'])
 @login_required
 def update_new_review(id):
@@ -48,23 +49,22 @@ def update_new_review(id):
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
-#get all reviews
+# get all reviews
 @reviews_routes.route('/all')
 def get_all_reviews():
     all_reviews = Review.query.all()
     return [review.to_dict() for review in all_reviews]
 
-#get one review
+# get one review
 @reviews_routes.route('/')
 
-#get all reviews for one vehicle
+# get all reviews for one vehicle
 @reviews_routes.route('/vehicle/<int:id>')
 def get_all_vehicle_reviews(id):
     all_reviews = Review.query.all()
     all_vehicle_reviews = [review.to_dict() for review in all_reviews if review.vehicle_id == id]
 
     return all_vehicle_reviews
-
 
 
 #delete a review
